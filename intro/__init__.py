@@ -43,10 +43,26 @@ class Intro(Page):
     def vars_for_template(player):
         treatment(player)
 
+    def before_next_page(player, timeout_happened):
+
+        participant = player.participant
+
+        if player.gender == 1 :
+            participant.male = 0
+            participant.female = 1
+
+        if player.gender == 2:
+            participant.male = 1
+            participant.female = 0
+
+        if player.gender > 2:
+            participant.male = 0
+            participant.female = 0
+
+
     def app_after_this_page(player, upcoming_apps):
             return upcoming_apps[0]
 
-    ## Male and female as strings to participant
 
 
 class ResultsWaitPage(WaitPage):
