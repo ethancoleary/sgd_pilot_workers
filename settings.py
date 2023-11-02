@@ -17,7 +17,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.75, doc=""
 )
 
-PARTICIPANT_FIELDS = ['male', 'female', 'draw', 'task1_score', 'task1_payoff', 'task2_score', 'task2_payoff', 'treatment', 'expiry']
+PARTICIPANT_FIELDS = ['male', 'female', 'pseudonym', 'draw', 'task1_score', 'task1_payoff', 'task2_score', 'task2_payoff', 'treatment', 'expiry']
 SESSION_FIELDS = []
 
 # ISO-639 code

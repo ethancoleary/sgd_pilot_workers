@@ -10,8 +10,25 @@
 
     First we ask that you kindly provide us with the gender that you identify with.
 
-    {{ formfields }}
+    {{ form.gender }}
 <br>
+
+During the experiment, others may be able to observe your choices and/or performances. To protect your identity, we ask that you choose a pseudonym from the list below.
+During the rest of the experiment you will then be represented as this name.
+<br>
+<br>
+<table class="table" style="margin: 0 auto; text-align: center;">
+    <tr>
+    {{ for choice in form.pseudonym }}
+        <td>{{ choice }}<br>
+            {{ choice.label }}
+        </td>
+    {{ endfor }}
+</tr>
+</table>
+<br>
+<br>
+
     By clicking next you agree to us processing your performance data in this experiment.
     All data is anonymised and will be used in another experiment where you may be assigned an additional bonus from another participant.
 

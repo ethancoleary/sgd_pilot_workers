@@ -25,10 +25,15 @@ class Player(BasePlayer):
         choices=[
             [1, 'Female'],
             [2, 'Male'],
-            [3, 'Non-binary'],
-            [4, 'Prefer not to say'],
+            [3, 'Both/Neither'],
         ],
         widget=widgets.RadioSelect)
+    pseudonym = models.StringField(
+        widget=widgets.RadioSelect,
+        choices=[
+            'Jacob', 'Zoe', 'Aiden', 'Abbie', 'Matthew', 'Chloe', 'Alexander', 'Grace', 'Daniel', 'Emma'
+        ]
+    )
 
 def treatment(player):
     participant = player.participant
@@ -38,10 +43,11 @@ def treatment(player):
 # PAGES
 class Intro(Page):
     form_model = 'player'
-    form_fields = ['gender']
+    form_fields = ['gender', 'pseudonym']
 
     def vars_for_template(player):
         treatment(player)
+
 
     def before_next_page(player, timeout_happened):
 
@@ -58,6 +64,8 @@ class Intro(Page):
         if player.gender > 2:
             participant.male = 0
             participant.female = 0
+
+        participant.pseudonym = player.pseudonym
 
 
     def app_after_this_page(player, upcoming_apps):
