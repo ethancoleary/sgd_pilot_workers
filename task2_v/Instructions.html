@@ -3,19 +3,27 @@
 {{ endblock }}
 {{ block content }}
 
-{{ if player.participant.treatment == 0 }}
 
 <p>
     The second round also lasts for 90 seconds.
     During this round you will be tasked with counting the number of ones (1) in a larger table.
     Once you have counted the number of ones, input the number in the box and click 'next'.
-    Your task is to correctly count ones in as many tables as possible in 90 seconds.
+    Your task is to correctly count ones in as many tables as possible in <b>90 seconds.</b>
     For each table that you correctly complete, you will earn 2 coins (2 coins = $0.05) as bonus. <br>
 </p>
 
 <p>
-    Below is an example table. Count the number of ones in the table correctly before proceeding.
+    You need to click on the submission box before typing each time. <br>
 </p>
+
+<p>
+    Below is an example table. Count the number of ones in the table correctly before proceeding.<br>
+</p>
+
+{{ if participant.treatment == 1 }}
+<b>You will be matched with an individual who performed similarly to you in the previous round. The two of you will have your performances evaluated by an experienced individual, who will decide which one will receive a bonus.<br>
+</b>
+{{ endif }}
 
 
     <div class="container">
@@ -71,28 +79,6 @@
         </table>
     </div>
     <br>
-
-{{ endif }}
-
-{{ if player.participant.treatment == 1 }}
-
-<p>
-    The second round also lasts for 90 seconds.
-    During this round you will be tasked with counting the number of times the letter 'e' occurs in a longer sentence.
-    Once you have counted the number of 'e's, input the number in the box and click 'next'.
-    Your task is to correctly count 'e's in as many sentences as possible in 90 seconds.
-    For each sentence that you correctly complete, you will earn 2 coins (2 coins = $0.05) as bonus. <br>
-</p>
-
-<p>
-    Below is an example text. Count the number of 'e's in the sentence correctly before proceeding.
-</p>
-
-<center>
-    The quick brown fox jumps over the lazy dog and smiles.
-    </center>
-
-{{ endif }}
 
 {% formfields %}
 {% next_button %}

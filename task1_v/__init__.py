@@ -60,23 +60,14 @@ class Instructions(Page):
     def vars_for_template(player):
         participant = player.participant
 
-        if participant.treatment == 1:
-            test_sentence = "The quick brown fox jumps over the lazy dog"
 
-            return {
-                'test_sentence':test_sentence,
-            }
+        test_grid = [1, 0, 1,
+                         0, 0, 0,
+                         1, 0, 0]
 
-        if participant.treatment == 0:
-
-            test_grid = [1, 0, 0, 1,
-                         0, 0, 0, 0,
-                         0, 0, 0, 0,
-                         1, 0, 0, 0]
-
-            return {
-                'test_grid': test_grid,
-            }
+        return {
+            'test_grid': test_grid,
+        }
 
     @staticmethod
     def error_message(player: Player, values):
@@ -102,7 +93,7 @@ class ReadyPage(Page):
         import time
 
         # remember to add 'expiry' to PARTICIPANT_FIELDS.
-        participant.expiry = time.time() + 20
+        participant.expiry = time.time() + 30
 
 
 class TaskPage(Page):
@@ -120,52 +111,14 @@ class TaskPage(Page):
     def vars_for_template(player):
         participant = player.participant
 
-        if participant.treatment == 1:
-            import random
-            # Generate a list of 25 random integers, each either 0 or 1
-            sentences = [
-                "Sailing on a tranquil sea under the starry sky.",
-                "Laughter is the best medicine for the soul's healing.",
-                "The journey of a thousand miles begins with a step.",
-                "Music has the power to soothe the deepest sorrows.",
-                "A smile can brighten even the gloomiest of days.",
-                "Dreams give us hope and the courage to pursue them.",
-                "In the end, we will remember not the words but the love.",
-                "Life's challenges make us stronger and wiser.",
-                "The beauty of nature is a source of endless inspiration.",
-                "Books are windows to different worlds and adventures.",
-                "Birds' songs at dawn herald the start of a new day.",
-                "Love is the most powerful force in the universe.",
-                "Every moment is a gift; that's why it's called the present.",
-                "Time waits for no one, so cherish every moment.",
-                "Dancing with abandon is the purest form of expression.",
-                "Hard work and determination lead to success.",
-                "Science uncovers the mysteries of our vast universe.",
-                "Creativity and imagination make art come alive.",
-                "A kind word can change someone's entire day.",
-                "Connecting with nature restores inner peace and balance.",
-                "Sometimes, silence speaks louder than words.",
-                "True friends are like stars, always there in the dark.",
-                "Exploring new places broadens our horizons.",
-                "Kindness is a language that the deaf can hear and the blind can see.",
-                "Serendipity leads us to unexpected discoveries."]
-            participant = player.participant
-            draw_number = participant.draw[player.round_number]
-            selected_sentence = sentences[draw_number]
-            player.correct_answer = selected_sentence.count('e')+selected_sentence.count('E')
-            return {
-                'selected_sentence':selected_sentence
-            }
+        import random
+        # Generate a list of 25 random integers, each either 0 or 1
+        grid_numbers = [random.randint(0, 1) for _ in range(9)]
+        player.correct_answer = sum(grid_numbers)
 
-        if participant.treatment == 0 :
-            import random
-            # Generate a list of 25 random integers, each either 0 or 1
-            grid_numbers = [random.randint(0, 1) for _ in range(16)]
-            player.correct_answer = sum(grid_numbers)
-
-            return {
-                'grid_numbers': grid_numbers
-            }
+        return {
+            'grid_numbers': grid_numbers
+        }
 
 
     def before_next_page(player, timeout_happened):

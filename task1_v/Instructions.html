@@ -3,14 +3,16 @@
 {{ endblock }}
 {{ block content }}
 
-{{ if player.participant.treatment == 0 }}
-
 <p>
-    The first round lasts for 90 seconds.
+    The first round lasts for 30 seconds.
     During this round you will be tasked with counting the number of ones (1) in a table.
     Once you have counted the number of ones, input the number in the box and click 'next'.
-    Your task is to correctly count ones in as many tables as possible in 90 seconds.
+    Your task is to correctly count ones in as many tables as possible in 30 seconds.
     For each table that you correctly complete, you will earn 2 coins (2 coins = $0.05) as bonus. <br>
+</p>
+
+<p>
+    You need to click on the submission box before typing each time. <br>
 </p>
 
 <p>
@@ -18,57 +20,28 @@
 </p>
 
 
-    <div class="container">
+     <div class="container">
         <table class="table table-bordered">
                 <tr>
                 <td> {{ test_grid.0 }}</td>
                 <td> {{ test_grid.1 }}</td>
                 <td> {{ test_grid.2 }}</td>
-                <td> {{ test_grid.3 }}</td>
             </tr>
             <tr>
+                <td> {{ test_grid.3 }}</td>
                 <td> {{ test_grid.4 }}</td>
                 <td> {{ test_grid.5 }}</td>
+            </tr>
+            <tr>
                 <td> {{ test_grid.6 }}</td>
                 <td> {{ test_grid.7 }}</td>
-            </tr>
-            <tr>
                 <td> {{ test_grid.8 }}</td>
-                <td> {{ test_grid.9 }}</td>
-                <td> {{ test_grid.10 }}</td>
-                <td> {{ test_grid.11 }}</td>
-            </tr>
-            <tr>
-                <td> {{ test_grid.12 }}</td>
-                <td> {{ test_grid.13 }}</td>
-                <td> {{ test_grid.14 }}</td>
-                <td> {{ test_grid.15 }}</td>
             </tr>
         </table>
     </div>
     <br>
 
-{{ endif }}
 
-{{ if player.participant.treatment == 1 }}
-
-<p>
-    The first round lasts for 90 seconds.
-    During this round you will be tasked with counting the number of times the letter 'e' occurs in a sentence.
-    Once you have counted the number of 'e's, input the number in the box and click 'next'.
-    Your task is to correctly count 'e's in as many sentences as possible in 90 seconds.
-    For each sentence that you correctly complete, you will earn 2 coins (2 coins = $0.05) as bonus. <br>
-</p>
-
-<p>
-    Below is an example text. Count the number of 'e's in the sentence correctly before proceeding.
-</p>
-
-<center>
-    The quick brown fox jumps over the lazy dog.
-    </center>
-
-{{ endif }}
 
 {% formfields %}
 {% next_button %}
