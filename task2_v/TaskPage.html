@@ -3,7 +3,6 @@
 {{ endblock }}
 {{ block content }}
 
-{{ if participant.treatment == 0 }}
 
 
         <div class="container">
@@ -63,17 +62,6 @@
 
 {{ formfields label="How many ones (1s) are in the table above?" }}
 
-{{  endif }}
-
-{{ if player.participant.treatment == 1 }}
-
-<center>
-    {{ selected_sentence }}
-</center>
-
-{{ formfields label="How many 'o's are in the sentence above? (Including upper case letters)" }}
-
-{{ endif }}
 
 {% next_button %}
 
