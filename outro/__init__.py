@@ -10,7 +10,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'outro'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    PARTICIPATION = 0.75
+    PARTICIPATION = 1
 
 
 class Subsession(BaseSubsession):
