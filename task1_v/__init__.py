@@ -10,7 +10,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'task1'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 25
-    PAYMENT_PER_CORRECT_ANSWER = 0.05
+    PAYMENT_PER_CORRECT_ANSWER = 0.1
 
 
 class Subsession(BaseSubsession):

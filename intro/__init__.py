@@ -90,7 +90,7 @@ class Intro(Page):
 
 class GenderElicit(Page):
     form_model = 'player'
-    form_fields = ['age', 'gender', 'education', 'experience']
+    form_fields = ['age', 'gender', 'education']
 
     def vars_for_template(player):
         treatment(player)
