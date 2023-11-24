@@ -93,7 +93,7 @@ class ReadyPage(Page):
         import time
 
         # remember to add 'expiry' to PARTICIPANT_FIELDS.
-        participant.expiry = time.time() + 30
+        participant.expiry = time.time() + 20
 
 
 class TaskPage(Page):
