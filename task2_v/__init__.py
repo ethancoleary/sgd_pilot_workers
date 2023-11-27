@@ -116,8 +116,22 @@ class TaskPage(Page):
 
         import random
         # Generate a list of 25 random integers, each either 0 or 1
-        grid_numbers = [random.randint(0, 1) for _ in range(36)]
-        player.correct_answer = sum(grid_numbers)
+        ones = random.randint(8, 36)
+        grid_numbers = [0, 0, 0, 0, 0 ,0,
+                        0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0]
+        for i in range(36):
+            if i < ones:
+                grid_numbers[i] = 1
+        random.shuffle(grid_numbers)
+        player.correct_answer = ones
+
+        return {
+            'grid_numbers': grid_numbers
+        }
 
         return {
             'grid_numbers': grid_numbers
