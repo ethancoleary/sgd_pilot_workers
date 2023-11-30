@@ -1,6 +1,5 @@
 from otree.api import *
 
-
 doc = """
 Your app description
 """
@@ -25,24 +24,23 @@ class Player(BasePlayer):
     feedback = models.LongStringField(blank=True)
 
 
-
 # PAGES
 class Feedback(Page):
     form_model = 'player'
     form_fields = ['feedback']
 
+    @staticmethod
     def vars_for_template(player):
         participant = player.participant
         total_bonus = participant.task1_payoff + participant.task2_payoff
         total_pay = total_bonus + C.PARTICIPATION
 
         return {
-            'total_bonus':total_bonus,
-            'total_pay':total_pay
+            'total_bonus': total_bonus,
+            'total_pay': total_pay
         }
 
 
-
-
-
-page_sequence = [Feedback]
+page_sequence = [
+    Feedback,
+]

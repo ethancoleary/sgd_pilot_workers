@@ -1,6 +1,5 @@
 from otree.api import *
 
-
 doc = """
 Your app description
 """
@@ -23,7 +22,7 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     consent = models.IntegerField(initial=0)
     age = models.IntegerField(
-        choices = [
+        choices=[
             [1, '<20 years'],
             [2, '20-29 years'],
             [3, '30-39 years'],
@@ -35,7 +34,7 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect
     )
     experience = models.IntegerField(
-        choices = [
+        choices=[
             [1, 'No managerial experience'],
             [2, '0-2 years managerial experience'],
             [3, '3-10 years managerial experience'],
@@ -44,7 +43,7 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect
     )
     education = models.IntegerField(
-        choices = [
+        choices=[
             [1, 'Did not graduate high school'],
             [2, 'High school graduate'],
             [3, 'Some college education'],
@@ -63,39 +62,52 @@ class Player(BasePlayer):
     pseudonym = models.StringField(
         widget=widgets.RadioSelect,
         choices=[
-            'Zoe', 'Abbie', 'Chloe', 'Grace', 'Emma', 'Ella', 'Viola', 'Sara', 'Jacob', 'Aiden', 'Matthew', 'Alexander',
-            'Daniel', 'Joel', 'Harvey', 'Mason'
+            'Zoe',
+            'Abbie',
+            'Chloe',
+            'Grace',
+            'Emma',
+            'Ella',
+            'Viola',
+            'Sara',
+            'Jacob',
+            'Aiden',
+            'Matthew',
+            'Alexander',
+            'Daniel',
+            'Joel',
+            'Harvey',
+            'Mason',
         ]
     )
+
 
 def treatment(player):
     participant = player.participant
     import random
-    participant.treatment = random.randint(0,1)
+    participant.treatment = random.randint(0, 1)
+
 
 # PAGES
 class Intro(Page):
     form_model = 'player'
     form_fields = ['consent']
 
-
     @staticmethod
     def error_message(player, values):
-        solutions = dict(consent=1)
-        if values != solutions:
+        if values['consent'] != 1:
             return "Please consent to participation or withdraw from the experiment by closing your browser."
-
-
 
 
 class GenderElicit(Page):
     form_model = 'player'
     form_fields = ['age', 'gender', 'education']
 
+    @staticmethod
     def vars_for_template(player):
         treatment(player)
 
-
+    @staticmethod
     def before_next_page(player, timeout_happened):
 
         participant = player.participant
@@ -113,18 +125,16 @@ class GenderElicit(Page):
             participant.female = 0
 
 
-
-
-
-
 class PseudonymElicit(Page):
     form_model = 'player'
     form_fields = ['pseudonym']
 
+    @staticmethod
     def before_next_page(player, timeout_happened):
         participant = player.participant
         participant.pseudonym = player.pseudonym
 
+    @staticmethod
     def app_after_this_page(player, upcoming_apps):
         return upcoming_apps[0]
 
@@ -133,4 +143,8 @@ class Results(Page):
     pass
 
 
-page_sequence = [Intro, GenderElicit, PseudonymElicit]
+page_sequence = [
+    Intro,
+    GenderElicit,
+    PseudonymElicit
+]

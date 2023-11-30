@@ -1,5 +1,6 @@
 from otree.api import *
-
+import time
+import random
 
 doc = """
 This app runs task 1 in the workers experiment
@@ -30,40 +31,27 @@ class Player(BasePlayer):
     total_score = models.IntegerField(initial=0)
     draw = models.IntegerField()
 
-timer_text = 'Time left in round'
-def get_timeout_seconds(player):
-    participant = player.participant
-    import time
-    return participant.expiry - time.time()
-
-def is_displayed1(player: Player):
-    """only returns True if there is time left."""
-    return get_timeout_seconds1(player) > 0
-
-
-def get_draw_order(player):
-    participant = player.participant
-    import random
-    numbers = [i for i in range(1,25)]
-    random.shuffle(numbers)
-    participant.draw = numbers
-
 
 # PAGES
+
+def get_timeout_seconds(player):
+    participant = player.participant
+    return participant.expiry - time.time()
+
+
 class Instructions(Page):
-    form_model='player'
-    form_fields= ['test_answer']
+    form_model = 'player'
+    form_fields = ['test_answer']
 
-    def is_displayed(subsession):
-        return subsession.round_number == 1
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
 
+    @staticmethod
     def vars_for_template(player):
-        participant = player.participant
-
-
         test_grid = [1, 0, 1,
-                         0, 0, 0,
-                         1, 0, 0]
+                     0, 0, 0,
+                     1, 0, 0]
 
         return {
             'test_grid': test_grid,
@@ -71,49 +59,49 @@ class Instructions(Page):
 
     @staticmethod
     def error_message(player: Player, values):
-        solutions = dict(test_answer=3)
-
-        if values != solutions:
+        if values['test_answer'] != 3:
             return "Answer is incorrect"
 
+    @staticmethod
     def before_next_page(player, timeout_happened):
         if player.round_number == 1:
-            get_draw_order(player)
+            participant = player.participant
+            numbers = list(range(1, 25))
+            random.shuffle(numbers)
+            participant.draw = numbers
 
 
 class ReadyPage(Page):
-    form_model='player'
+    form_model = 'player'
 
-    def is_displayed(subsession):
-        return subsession.round_number == 1
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
 
     @staticmethod
     def before_next_page(player, timeout_happened):
         participant = player.participant
-        import time
-
-        # remember to add 'expiry' to PARTICIPANT_FIELDS.
         participant.expiry = time.time() + 20
 
 
 class TaskPage(Page):
-    form_model='player'
-    form_fields=['number_entered']
-    import random
-
-    get_timeout_seconds = get_timeout_seconds
+    form_model = 'player'
+    form_fields = ['number_entered']
+    timer_text = 'Time left in round'
 
     @staticmethod
     def is_displayed(player):
         return get_timeout_seconds(player) >= 0
 
-
-    def vars_for_template(player):
+    @staticmethod
+    def get_timeout_seconds(player):
         participant = player.participant
+        return participant.expiry - time.time()
 
-        import random
+    @staticmethod
+    def vars_for_template(player):
         # Generate a list of 25 random integers, each either 0 or 1
-        ones = random.randint(1,9)
+        ones = random.randint(1, 9)
         grid_numbers = [0, 0, 0,
                         0, 0, 0,
                         0, 0, 0]
@@ -127,37 +115,41 @@ class TaskPage(Page):
             'grid_numbers': grid_numbers
         }
 
-
+    @staticmethod
     def before_next_page(player, timeout_happened):
         if player.correct_answer == player.number_entered:
             player.payoff = C.PAYMENT_PER_CORRECT_ANSWER
             player.score = 1
 
 
-
 class Results(Page):
+
+    @staticmethod
     def is_displayed(player):
         return get_timeout_seconds(player) <= 0
-    pass
+
 
 class RoundResults(Page):
 
+    @staticmethod
     def is_displayed(player):
         return get_timeout_seconds(player) <= 0
 
+    @staticmethod
     def vars_for_template(player):
         all_players = player.in_all_rounds()
-        total_score = sum([p.score for p in all_players])
+        total_score = sum(p.score for p in all_players)
 
         participant = player.participant
         participant.task1_score = total_score
         combined_payoff = 0
-        for player in all_players:
-            combined_payoff += player.payoff
+        for p in all_players:
+            combined_payoff += p.payoff
 
         participant.task1_payoff = combined_payoff
+
         return {
-            "total_score":total_score,
+            "total_score": total_score,
             "combined_payoff": combined_payoff,
         }
 
@@ -167,7 +159,9 @@ class RoundResults(Page):
             return upcoming_apps[0]
 
 
-
-
-
-page_sequence = [Instructions, ReadyPage, TaskPage, RoundResults]
+page_sequence = [
+    Instructions,
+    ReadyPage,
+    TaskPage,
+    RoundResults
+]
