@@ -9,13 +9,15 @@ SESSION_CONFIGS = [
             'task2_v',
             'outro'
         ],
-        num_demo_participants=5
+        num_demo_participants=5,
+
     )
 ]
 
 SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00,
     participation_fee=0.75,
+    completion_code='CAI22CMG',
     doc=""
 )
 

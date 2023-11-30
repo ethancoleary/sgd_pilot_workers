@@ -41,6 +41,18 @@ class Feedback(Page):
         }
 
 
+class Redirect(Page):
+    @staticmethod
+    def vars_for_template(player):
+        code = player.session.config['completion_code']
+        link = f"https://app.prolific.co/submissions/complete?cc={code}"
+
+        return dict(
+            link=link,
+        )
+
+
 page_sequence = [
     Feedback,
+    Redirect,
 ]
