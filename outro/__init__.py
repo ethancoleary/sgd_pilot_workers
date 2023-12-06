@@ -9,7 +9,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'outro'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    PARTICIPATION = 1
+    PARTICIPATION = 2
 
 
 class Subsession(BaseSubsession):
@@ -32,8 +32,8 @@ class Feedback(Page):
     @staticmethod
     def vars_for_template(player):
         participant = player.participant
-        total_bonus = participant.task1_payoff + participant.task2_payoff
-        total_pay = total_bonus + C.PARTICIPATION
+        total_bonus = cu(participant.task1_payoff + participant.task2_payoff)
+        total_pay = cu(total_bonus + C.PARTICIPATION)
 
         return {
             'total_bonus': total_bonus,
